@@ -6,7 +6,7 @@ const dismissCookies = async (page: Page) => {
     if (await rejectAllButton.isVisible()) {
         await rejectAllButton.click()
 
-        await page.waitForTimeout(20000); // processing cookies choice
+        await page.waitForTimeout(2000); // processing cookies choice
     }
 }
 

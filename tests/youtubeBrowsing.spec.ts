@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import dismissCookies from "./dismissCookiesPopup";
+import dismissCookies from "../utils/dismissCookiesPopup";
 
 const searchedVideoQuery = 'Karel Gott'
 
@@ -25,7 +25,8 @@ test.describe('youtube public page', () => {
         console.log('startSearchBtn not found')
     }
 
-    await page.waitForLoadState()
+    // ideal would be to have something like .toHaveCountGreaterThan(5), which Playwright currently does not have
+    await expect(page.locator("ytd-video-renderer >> nth=10")).toBeVisible()
 
     const searchMatches = await page.getByText(searchedVideoQuery).all()
     expect(searchMatches.length).toBeGreaterThan(5)
