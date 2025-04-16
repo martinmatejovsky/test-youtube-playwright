@@ -19,11 +19,9 @@ test.describe('youtube public page', () => {
 
     const startSearchBtn = page.getByRole('button', { name: 'Search', exact: true })
 
-    if (await startSearchBtn.isVisible()) {
-      await startSearchBtn.click()
-    } else {
-        console.log('startSearchBtn not found')
-    }
+    await startSearchBtn.isVisible()
+
+    await startSearchBtn.click()
 
     // ideal would be to have something like .toHaveCountGreaterThan(5), which Playwright currently does not have
     await expect(page.locator("ytd-video-renderer >> nth=10")).toBeVisible()
