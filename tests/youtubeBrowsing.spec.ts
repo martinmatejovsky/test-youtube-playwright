@@ -1,10 +1,15 @@
 import { test, expect } from '@playwright/test';
 import dismissCookies from "../utils/dismissCookiesPopup";
+import blockRedundantNetworks from "../utils/redundantNetworkBlocking";
 
 const searchedVideoQuery = 'Karel Gott'
 
 test.describe('youtube public page', () => {
-  test('has title', async ({page}) => {
+  test.beforeEach(async ({ page }) => {
+    await blockRedundantNetworks(page);
+  });
+
+  test('Public page has title', async ({page}) => {
     await page.goto('https://www.youtube.com/');
 
     await expect(page).toHaveTitle(/YouTube/i);
