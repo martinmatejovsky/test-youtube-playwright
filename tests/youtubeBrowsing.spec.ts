@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import dismissCookies from "../utils/dismissCookiesPopup";
 import blockRedundantNetworks from "../utils/redundantNetworkBlocking";
+import searchVideoByQuery from "../utils/searchVideoByQuery";
 
 const searchedVideoQuery = 'Karel Gott'
 
@@ -20,16 +21,7 @@ test.describe('youtube public page', () => {
 
     await dismissCookies(page)
 
-    await page.getByRole('combobox').fill(searchedVideoQuery)
-
-    const startSearchBtn = page.getByRole('button', { name: 'Search', exact: true })
-
-    await startSearchBtn.isVisible()
-
-    await startSearchBtn.click()
-
-    // ideal would be to have something like .toHaveCountGreaterThan(5), which Playwright currently does not have
-    await expect(page.locator("ytd-video-renderer >> nth=10")).toBeVisible()
+    await searchVideoByQuery(page, searchedVideoQuery)
 
     const searchMatches = await page.getByText(searchedVideoQuery).all()
     expect(searchMatches.length).toBeGreaterThan(5)
